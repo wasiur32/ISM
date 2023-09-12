@@ -23,11 +23,14 @@ def submit_file():
             flash('No file selected for uploading')
             return redirect(request.url)
         if file:
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            label = getPrediction(filename)
-            full_filename = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            return render_template('result.html', label=label, image=full_filename)
+            try:
+            	filename = secure_filename(file.filename)
+            	file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            	label = getPrediction(filename)
+            	full_filename = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            	return render_template('result.html', label=label, image=full_filename)
+            except:
+                return render_template('result_no.html')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80)
