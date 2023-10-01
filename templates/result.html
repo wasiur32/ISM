@@ -28,12 +28,24 @@
             margin-left: auto;
             margin-right: auto;
         }
+
+        a {
+            color: white; /* Set link color to white */
+            text-decoration: none; /* Remove underline */
+            display: inline-block;
+            margin: 10px; /* Add some margin for spacing */
+        }
     </style>
 </head>
 <body>
     <h1>Water Body Segmentation Result</h1>
     
-    <!-- Specify the URL of the output image using Flask's `url_for` function -->
-    <img src="{{ url_for('static', filename='output/test_output.jpg') }}" alt="Segmentation Result">
+    <!-- Display the JPG image on the web page -->
+     <img src="{{ url_for('static', filename='output/test_output.jpg') }}" alt="Segmentation Result">
+    
+    <!-- Add a link to download the TIFF image -->
+    <a href="{{ url_for('static', filename='output/test_output.tif') }}" download>Download TIFF</a>
+    
+  
 </body>
 </html>
