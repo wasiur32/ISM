@@ -4,6 +4,11 @@ import pandas as pd
 import rasterio
 from tensorflow.keras.models import load_model
 from PIL import Image
+import os
+
+from flask import Flask, render_template
+
+app = Flask(__name__)
 
 def getPrediction(filename):
     model_path = 'model/model3.h5'
@@ -16,7 +21,10 @@ def getPrediction(filename):
     with rasterio.open(img_path) as dataset:
         # Read all bands (assuming it's a multi-band image)
         img = dataset.read()
-    
+        
+        # Get the metadata from the original image
+        metadata = dataset.profile
+
     # Scale pixel values using min-max scaling
     img = (img - img.min()) / (img.max() - img.min())
     
@@ -29,17 +37,27 @@ def getPrediction(filename):
     threshold = 0.5
     pred = my_model.predict(img)
     pred = (pred > threshold).astype(np.uint8)
-    output_path = 'static/output/' + 'test_output.jpg'
-    Image.fromarray(pred[0, :, :, 0] * 255).convert('L').save(output_path)
-    # Display the predicted image using matplotlib
-    #plt.figure(figsize=(8,8))
-    #plt.title('Segmentation Result')
-    #plt.imshow(pred[0, :, :, 0], cmap='gray')  # Assuming it's binary segmentation
+    output_path_tiff = 'static/output/test_output.tif'  # TIFF output
+    output_path_jpg = 'static/output/test_output.jpg'  # JPG output
     
-    #plt.show()  # Display the plot
-    #plt.savefig(img_op+"output.jpg", dpi=30)
+    # Save the prediction as a TIFF file with metadata
+    with rasterio.open(
+        output_path_tiff,
+        'w',
+        driver='GTiff',
+        height=pred.shape[1],
+        width=pred.shape[2],
+        count=1,
+        dtype=str(pred.dtype),
+        crs=metadata.get('crs'),  # Copy the coordinate reference system
+        transform=metadata.get('transform'),  # Copy the transformation
+    ) as dst:
+        dst.write(pred[0, :, :, 0], 1)
     
-    return pred
+    # Convert the TIFF image to grayscale using Pillow (PIL) and save as JPG
+    img_tiff = Image.open(output_path_tiff)
+    img_pil = Image.fromarray((np.array(img_tiff) * 255).astype(np.uint8))
+    img_pil = img_pil.convert('L')  # Convert to grayscale
+    img_pil.save(output_path_jpg, 'JPEG')
 
-
-#predict=getPrediction('test.tif')
+    return output_path_tiff, output_path_jpg
