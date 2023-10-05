@@ -7,16 +7,24 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                // Build your application
-                sh 'make build'
+                // Build your Docker image
+                script {
+                    def dockerImage = docker.build('my-docker-image:latest', './path/to/Dockerfile')
+                }
             }
         }
-        stage('Deploy') {
+        stage('Push Docker Image') {
             steps {
-                // Deploy your application
-                sh 'make deploy'
+                // Push the Docker image to a container registry (e.g., Docker Hub)
+                sh 'docker push my-docker-image:latest'
+            }
+        }
+        stage('Deploy Docker Container') {
+            steps {
+                // Deploy the Docker container (e.g., using Docker Compose or Kubernetes)
+                sh 'docker-compose up -d'
             }
         }
     }
