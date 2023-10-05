@@ -11,8 +11,7 @@ pipeline {
             steps {
                 // Build your Docker image
                 script {
-                    def dockerHome = tool name: 'Docker', type: 'Tool'
-                    def dockerImage = docker.build('my-docker-image:latest', './path/to/Dockerfile', dockerfileDir: '.', toolName: dockerHome)
+                    def dockerImage = docker.build('my-docker-image:latest', './path/to/Dockerfile', dockerfileDir: '.')
                 }
             }
         }
