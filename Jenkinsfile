@@ -1,32 +1,31 @@
 pipeline {
     agent any
+    
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout code from Git
-                checkout scm
-            }
-        }
         stage('Build Docker Image') {
             steps {
-                // Build your Docker image
+                // Build a Docker image from your Dockerfile
                 script {
-                    def dockerImage = docker.build('my-docker-image:latest', '-f /home/mykey/ISM/Dockerfile /home/mykey/ISM')
+                    def customImage = docker.build('my-ism-docker-image:latest', '-f ./Dockerfile .')
                 }
             }
         }
-        stage('Push Docker Image') {
-            steps {
-                // Push the Docker image to a container registry (e.g., Docker Hub)
-                sh 'docker push my-docker-image:latest'
-            }
-        }
+        
         stage('Deploy Docker Container') {
             steps {
-                // Deploy the Docker container (e.g., using Docker Compose or Kubernetes)
-                // Assuming you have a docker-compose.yml file in the same directory
-                sh 'docker-compose up -d'
+                script {
+                    def myContainer = docker.image('my-ism-docker-image:latest').run('-p 8080:80')
+                }
             }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed!'
         }
     }
 }
