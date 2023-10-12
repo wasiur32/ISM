@@ -11,7 +11,7 @@ pipeline {
             steps {
                 // Build your Docker image
                 script {
-                    def dockerImage = docker.build('my-docker-image:latest', './path/to/Dockerfile', dockerfileDir: '.')
+                    def dockerImage = docker.build('my-docker-image:latest', '-f /home/mykey/ISM/Dockerfile /home/mykey/ISM')
                 }
             }
         }
@@ -24,6 +24,7 @@ pipeline {
         stage('Deploy Docker Container') {
             steps {
                 // Deploy the Docker container (e.g., using Docker Compose or Kubernetes)
+                // Assuming you have a docker-compose.yml file in the same directory
                 sh 'docker-compose up -d'
             }
         }
