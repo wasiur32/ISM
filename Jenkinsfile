@@ -1,12 +1,4 @@
-pipeline {
-    agent {
-        docker {
-            image 'your-docker-image'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'  // Bind Docker socket
-        }
-    }
-
-    stages {
+stages {
         stage('Docker Compose Down') {
             steps {
                 sh 'docker-compose down'
