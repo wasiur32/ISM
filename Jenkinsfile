@@ -1,4 +1,7 @@
-stages {
+pipeline {
+    agent any
+    
+    stages {
         stage('Docker Compose Down') {
             steps {
                 sh 'docker-compose down'
