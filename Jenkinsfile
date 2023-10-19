@@ -1,6 +1,11 @@
 pipeline {
-    agent any
-    
+    agent {
+        docker {
+            image 'your-docker-image'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'  // Bind Docker socket
+        }
+    }
+
     stages {
         stage('Docker Compose Down') {
             steps {
