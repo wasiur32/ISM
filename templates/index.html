@@ -1,22 +1,25 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Water Body Mask</title>
+  <title>Near Real-Time Flood Mapping AI Platform</title>
   <style>
     body {
-      background-color: #000; /* Set background color to pure black */
-      background-image: url('https://wallpaperaccess.com/full/301760.jpg'); /* Add your background image here */
+      background-color: #000;
+      background-image: url('https://wallpaperaccess.com/full/301760.jpg');
       background-size: cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
-      color: yellowgreen;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
       text-align: center;
+      margin: 0;
+      padding: 0;
     }
 
     h2 {
-      margin-top: 10vh; /* Center text vertically */
+      margin-top: 10vh;
       color: yellow;
     }
 
@@ -29,11 +32,16 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      margin-top: 20px;
     }
 
     input[type="file"] {
       color: violet;
       margin: 10px;
+      padding: 10px;
+      border: 2px solid violet;
+      border-radius: 5px;
+      background-color: #222;
     }
 
     input[type="submit"] {
@@ -42,22 +50,27 @@
       border: none;
       padding: 10px 20px;
       cursor: pointer;
+      border-radius: 5px;
     }
 
     p {
       color: mediumseagreen;
+      margin-top: 20px;
     }
 
     img {
-      width: 300px;
-      height: 225px;
+      width: 100%;
+      max-width: 600px;
+      height: auto;
       margin-top: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
   </style>
 </head>
 
 <body>
-  <h2> Near Real-Time Flood Mapping Ai Platform </h2>
+  <h2>Near Real-Time Flood Mapping AI Platform</h2>
   <h4>Upload an image and click submit</h4>
 
   <form method="post" action="/" enctype="multipart/form-data">
@@ -69,7 +82,7 @@
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         Diagnosis for the following image is: <u><h3>{{ messages[0] }}</h3></u><br>
-        <img src="{{ messages[1] }}">
+        <img src="{{ messages[1] }}" alt="Diagnosis Image">
       {% endif %}
     {% endwith %}
   </p>
