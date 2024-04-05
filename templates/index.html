@@ -1,90 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Near Real-Time Flood Mapping AI Platform</title>
+  <title>Krishi Bondhu AI - Crop Disease Detector Platform</title>
   <style>
     body {
-      background-color: #000;
-      background-image: url('https://wallpaperaccess.com/full/301760.jpg');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      color: #fff;
-      font-family: 'Arial', sans-serif;
-      text-align: center;
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
       margin: 0;
       padding: 0;
     }
-
-    h2 {
-      margin-top: 10vh;
-      color: yellow;
+    #header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
     }
-
-    h4 {
-      color: violet;
+    #container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-top: 50px;
     }
-
-    form {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      margin-top: 20px;
+    h2, h4 {
+      color: #4CAF50;
+      text-align: center;
     }
-
     input[type="file"] {
-      color: violet;
-      margin: 10px;
-      padding: 10px;
-      border: 2px solid violet;
-      border-radius: 5px;
-      background-color: #222;
+      display: block;
+      margin: 20px auto;
     }
-
     input[type="submit"] {
-      background-color: mediumseagreen;
-      color: #fff;
+      background-color: #4CAF50;
+      color: white;
       border: none;
       padding: 10px 20px;
+      border-radius: 4px;
       cursor: pointer;
-      border-radius: 5px;
+      display: block;
+      margin: 0 auto;
+      transition: background-color 0.3s;
     }
-
-    p {
-      color: mediumseagreen;
-      margin-top: 20px;
+    input[type="submit"]:hover {
+      background-color: #45a049;
     }
-
-    img {
-      width: 100%;
-      max-width: 600px;
+    #result {
+      text-align: center;
+      margin-top: 30px;
+    }
+    #result h3 {
+      color: #4CAF50;
+      margin-bottom: 10px;
+    }
+    #result img {
+      max-width: 100%;
       height: auto;
+      border-radius: 4px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
       margin-top: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    #gif {
+      text-align: center;
+      margin-top: 20px;
     }
   </style>
 </head>
-
 <body>
-  <h2>Near Real-Time Flood Mapping AI Platform</h2>
-  <h4>Upload an image and click submit</h4>
-
-  <form method="post" action="/" enctype="multipart/form-data">
-    <input type="file" name="file" autocomplete="off" required>
-    <input type="submit" name="submit" value="Submit">
-  </form>
-
-  <p>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        Diagnosis for the following image is: <u><h3>{{ messages[0] }}</h3></u><br>
-        <img src="{{ messages[1] }}" alt="Diagnosis Image">
-      {% endif %}
-    {% endwith %}
-  </p>
+  <div id="header">
+    <h1>Krishi Bondhu AI - Crop Disease Detector Platform</h1>
+  </div>
+  <div id="container">
+    <h2>Upload an image and click submit</h2>
+    <form method="post" action="/" enctype="multipart/form-data">
+      <input type="file" name="file" autocomplete="off" required>
+      <input type="submit" name="submit" value="Submit">
+    </form>
+    <div id="result">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <h3>{{ messages[0] }}</h3>
+          <img src="{{ messages[1] }}" alt="Uploaded Image">
+        {% endif %}
+      {% endwith %}
+    </div>
+  </div>
+  <div id="gif">
+    <img src="krishi_bondhu.gif" alt="Krishi Bondhu AI - Crop Disease Detector" width="400">
+  </div>
 </body>
 </html>
